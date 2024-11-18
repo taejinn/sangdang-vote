@@ -1,3 +1,4 @@
+
 .container {
   display: flex;
   flex-direction: column;
@@ -7,7 +8,7 @@
 }
 
 .title {
-  font-family: "pretendard", sans-serif;
+  font-family: 'pretendard', sans-serif;
   font-size: 25px;
   font-weight: 800;
   text-align: center;
@@ -21,7 +22,7 @@
 }
 
 .description {
-  font-family: "pretendard", sans-serif;
+  font-family: 'pretendard', sans-serif;
   font-size: 17px;
   font-weight: 300;
   margin-top: 10px;
@@ -44,7 +45,7 @@
   background: linear-gradient(to right top, #a8ff78, #78ffd6);
   border-color: #87cd61;
   box-shadow: 0 5px 20px 0 #a8ff78;
-  transition: all 0.3s ease;
+  transition: all .3s ease;
 }
 
 .select {
@@ -60,25 +61,26 @@
   border-radius: 10px;
   cursor: pointer;
   background: white;
-  transition: all 0.3s ease;
-}
-.select:last-child {
-  margin-top: 0;
-  border-left: none;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.select:first-child {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.select .name {
-  font-family: "pretendard", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-  color: black;
-  margin-top: 10px;
-}
+  transition: all .3s ease;
 
-/*# sourceMappingURL=page.module.css.map */
+  &:last-child {
+    margin-top: 0;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .name {
+    font-family: 'pretendard', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    color: black;
+    margin-top: 10px;
+  }
+}
