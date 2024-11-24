@@ -1,0 +1,8 @@
+.container {
+  width: calc(100% - 40px);
+  min-width: 300px;
+  max-width: 500px;
+  margin: auto auto 20px;
+}
+
+/*# sourceMappingURL=Container.module.css.map */
