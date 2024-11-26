@@ -198,6 +198,12 @@ export default function Vote() {
                         setIsVoteLoading(false);
                         setProgress("alreadyVoted");
                         setLiveConnectStatus("GOOD")
+                        setVoteInfo({
+                            name: voteData?.data.voteInfo.name,
+                            choices: voteData?.data.voteInfo.choices,
+                            maxChoices: voteData?.data.voteInfo.maxChoices,
+                            minChoices: voteData?.data.voteInfo.minChoices,
+                        });
                         setUserVote({ choices: voteData.data.voteResult.choices });
                         return;
                     }
@@ -486,7 +492,7 @@ export default function Vote() {
         <div key={'alreadyVoted-1'}>
             <div className={styles.question}>
                 <div className={styles.text}>
-                    Q. 다음 중 잘못된 것을 골라골라골라주세요
+                    Q. {voteInfo?.name}
                 </div>
             </div>
             <div className={styles.alreadyVoted}>

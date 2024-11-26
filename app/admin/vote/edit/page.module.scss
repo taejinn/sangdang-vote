@@ -1,0 +1,26 @@
+
+.tableItem {
+  cursor: pointer;
+
+  &:hover {
+    font-weight: 600;
+    color: red;
+  }
+}
+
+.table {
+  width: fit-content;
+  font-family: "pretendard", sans-serif;
+}
+
+.voteWarning {
+  margin-top: 10px;
+  width: fit-content;
+  font-family: "pretendard", sans-serif;
+
+  #bold {
+    color: red;
+    font-weight: 600;
+    background: #ffff00;
+  }
+}

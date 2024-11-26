@@ -19,15 +19,15 @@ export default function Home() {
                 아래 유형을 선택해주세요
             </div>
             <div className={styles.box}>
-                <div onClick={() => router.push('/vote')} className={styles.select} id={styles.selectGradient}>
+                <div onClick={() => router.replace('/vote')} className={styles.select} id={styles.selectGradient}>
                     <MdHowToVote size={40}/>
                     <div className={styles.name}>
                         투표 참여
                     </div>
                 </div>
-                <div className={styles.select}>
+                <div onClick={() => router.replace('/admin')} className={styles.select}>
                     <MdSettings size={40}/>
-                    <div onClick={() => router.push('/admin')} className={styles.name}>
+                    <div className={styles.name}>
                         투표 관리
                     </div>
                 </div>

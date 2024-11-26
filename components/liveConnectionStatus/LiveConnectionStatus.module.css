@@ -1,0 +1,105 @@
+.box {
+  width: fit-content;
+  padding: 10px 20px;
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  display: flex;
+  flex: 2;
+  flex-direction: row;
+  border-radius: 15px;
+}
+.box .circle {
+  display: flex;
+  border-radius: 100%;
+  background: #00d600;
+  width: 13px;
+  height: 13px;
+  margin-top: 6.25px;
+}
+.box .text {
+  font-family: "pretendard", sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  text-align: left;
+  margin-left: 10px;
+  user-select: none;
+}
+
+#statusSuccess {
+  background-color: #00c300;
+  animation-name: statusSuccess;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+#statusError {
+  background-color: #c30000;
+  animation-name: statusError;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+#statusUnknown {
+  background-color: #afafaf;
+  animation-name: statusUnknown;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+#statusReconnect {
+  background-color: #ffdb00;
+  animation-name: statusReconnect;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes statusReconnect {
+  0% {
+    box-shadow: 0 0 0 0 #ffdb00;
+  }
+  50% {
+    box-shadow: 0 0 15px 0 #ffdb00;
+  }
+  100% {
+    box-shadow: 0 0 15px 0 transparent;
+  }
+}
+@keyframes statusSuccess {
+  0% {
+    box-shadow: 0 0 0 0 #00c300;
+  }
+  50% {
+    box-shadow: 0 0 15px 0 #00c300;
+  }
+  100% {
+    box-shadow: 0 0 15px 0 transparent;
+  }
+}
+@keyframes statusError {
+  0% {
+    box-shadow: 0 0 0 0 #c30000;
+  }
+  50% {
+    box-shadow: 0 0 15px 0 #c30000;
+  }
+  100% {
+    box-shadow: 0 0 15px 0 transparent;
+  }
+}
+@keyframes statusUnknown {
+  0% {
+    box-shadow: 0 0 0 0 #afafaf;
+  }
+  50% {
+    box-shadow: 0 0 15px 0 #555555;
+  }
+  100% {
+    box-shadow: 0 0 15px 0 transparent;
+  }
+}
+
+/*# sourceMappingURL=LiveConnectionStatus.module.css.map */
