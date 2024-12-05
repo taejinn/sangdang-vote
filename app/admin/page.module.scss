@@ -53,27 +53,6 @@
   }
 }
 
-.sidebarTitle {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  user-select: none;
-
-  .text {
-    font-family: 'pretendard', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    text-align: center;
-    color: black;
-    line-height: 25px;
-  }
-
-  #titleGradient {
-    background: linear-gradient(to right top, #0575E6, #021B79);
-    color: transparent;
-    -webkit-background-clip: text;
-  }
-}
-
 .container {
   margin-left: 270px;
   height: 100vh;

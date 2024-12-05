@@ -11,11 +11,14 @@ import {useSocket} from "@/components/socketProvider/SocketProvider";
 import {useUser} from "@auth0/nextjs-auth0";
 import Table from "react-bootstrap/Table";
 import formatDate from "@/components/formatDate/formatDate";
-import { Badge } from 'react-bootstrap';
+import {Badge, Button} from 'react-bootstrap';
+import {MdOutlineOpenInNew} from "react-icons/md";
+import {useRouter} from "next/navigation";
 
 export default function List() {
 
     const {voteSocket} = useSocket();
+    const router = useRouter();
     const { user } = useUser()
     const [voteList, setVoteList] = useState<[ {
         name: string,
@@ -59,18 +62,30 @@ export default function List() {
                 <Table striped hover bordered className={styles.table}>
                     <thead>
                     <tr>
+                        <th style={{textAlign: "center"}}>투표화면</th>
                         <th>투표 제목</th>
                         <th>선택지</th>
                         <th>상태</th>
                         <th>선택 최소</th>
                         <th>선택 최대</th>
                         <th>생성일</th>
+                        <th>투표 ID</th>
                     </tr>
                     </thead>
                     <tbody>
                         {voteList.map((data, key) => {
                             return (
                                 <tr key={key}>
+                                    <td style={{textAlign: "center"}}>
+                                        <Button
+                                            variant={"primary"}
+                                            onClick={() => {
+                                                window.open(process.env.NEXT_PUBLIC_URL + "/vote?id="+data.voteId);
+                                            }}
+                                        >
+                                            <MdOutlineOpenInNew size={15} />
+                                        </Button>
+                                    </td>
                                     <td>{data.name}</td>
                                     <td>{data.choices.map((data, key) => {
                                         return (
@@ -79,16 +94,17 @@ export default function List() {
                                             </div>
                                         )
                                     })}</td>
-                                    <td>{data.status === "시작" ? <Badge bg="success">시작</Badge> : <Badge bg="danger">종료</Badge>}</td>
+                                    <td>{data.status === "시작" ? <Badge bg="success">시작</Badge> :
+                                        <Badge bg="danger">종료</Badge>}</td>
                                     <td>{data.minChoices}</td>
                                     <td>{data.maxChoices}</td>
                                     <td>{formatDate(data.createdAt)}</td>
+                                    <td>{data.voteId}</td>
                                 </tr>
                             )
                         })}
                     </tbody>
                 </Table>
-
             </AdminContainer>
         </>
     )

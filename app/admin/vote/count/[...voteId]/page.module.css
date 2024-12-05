@@ -1,0 +1,40 @@
+.numberOfParticipants {
+  margin-bottom: 20px;
+}
+.numberOfParticipants .text {
+  font-family: "pretendard", sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  color: black;
+}
+.numberOfParticipants #red {
+  color: #ff0000;
+  background: #ffff00;
+}
+
+.table {
+  width: fit-content;
+  font-family: "pretendard", sans-serif;
+}
+
+#choice {
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+}
+
+#votes {
+  font-weight: 900;
+  font-size: 20px;
+  text-align: center;
+  color: #ff0000;
+  background: #ffff00;
+}
+
+#ratio {
+  font-weight: 900;
+  font-size: 20px;
+  text-align: center;
+}
+
+/*# sourceMappingURL=page.module.css.map */

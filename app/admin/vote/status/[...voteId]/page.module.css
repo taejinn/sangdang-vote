@@ -1,0 +1,45 @@
+.table {
+  width: fit-content !important;
+  font-family: "pretendard", sans-serif;
+}
+
+.changeStatusText {
+  color: red;
+  background: yellow;
+  width: fit-content;
+}
+
+.radioText {
+  font-family: "pretendard", sans-serif;
+  font-weight: 600;
+  color: black;
+}
+
+.saveButton {
+  font-family: "pretendard", sans-serif !important;
+  margin-top: 20px !important;
+}
+
+.changeStatusBorder1 {
+  border-top: 3px solid #ff0000 !important;
+  border-left: 3px solid #ff0000 !important;
+  border-right: 3px solid #ff0000 !important;
+  background-color: yellow !important;
+}
+
+.changeStatusBorder2 {
+  border-bottom: 3px solid #ff0000 !important;
+  border-left: 3px solid #ff0000 !important;
+  border-right: 3px solid #ff0000 !important;
+  background-color: yellow !important;
+}
+
+#start {
+  color: #007800;
+}
+
+#end {
+  color: #ff0000;
+}
+
+/*# sourceMappingURL=page.module.css.map */

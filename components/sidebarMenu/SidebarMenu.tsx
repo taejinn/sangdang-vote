@@ -1,7 +1,7 @@
 "use client";
 
 import {Menu, MenuItem, Sidebar, sidebarClasses} from "react-pro-sidebar";
-import styles from "@/app/admin/page.module.css";
+import styles from "./SidebarMenu.module.css";
 import React from "react";
 import {useRouter} from "next/navigation";
 import {IoMdAdd, IoMdHome, IoMdList} from "react-icons/io";
@@ -32,6 +32,11 @@ export default function SidebarMenu() {
                             <br/>관리자 페이지
                         </div>
                     </div>
+                    <div className={styles.logout} onClick={()=>router.push("/auth/logout")}>
+                        <div className={styles.text}>
+                            로그아웃
+                        </div>
+                    </div>
                     <MenuItem
                         onClick={() => router.push('/admin')}
                         rootStyles={{
@@ -55,7 +60,7 @@ export default function SidebarMenu() {
                         투표 목록
                     </MenuItem>
                     <MenuItem
-                        onClick={() => router.push('/admin/vote/add')}
+                        onClick={() => router.push('/admin/vote/create')}
                         rootStyles={{
                             textAlign: "left",
                             fontFamily: "pretendard",

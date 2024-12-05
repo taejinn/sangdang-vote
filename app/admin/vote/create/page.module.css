@@ -1,0 +1,45 @@
+.formTitle {
+  font-family: "pretendard", sans-serif;
+  margin-top: 20px;
+}
+
+.inputGroup {
+  margin-top: 10px;
+}
+
+.inputNumber {
+  font-family: "pretendard", sans-serif;
+}
+
+.formInput {
+  font-family: "pretendard", sans-serif;
+  width: 600px !important;
+}
+.formInput:first-child {
+  margin-top: 0;
+}
+
+.buttonGroup {
+  margin-top: 10px;
+}
+.buttonGroup .buttonGroupButton {
+  font-family: "pretendard", sans-serif;
+}
+
+.saveButton {
+  margin-top: 20px;
+  font-family: "pretendard", sans-serif;
+}
+
+.voteWarning {
+  margin-top: 10px;
+  width: fit-content;
+  font-family: "pretendard", sans-serif;
+}
+.voteWarning #bold {
+  color: red;
+  font-weight: 600;
+  background: #ffff00;
+}
+
+/*# sourceMappingURL=page.module.css.map */
