@@ -120,7 +120,6 @@ function VoteContent() {
     if (voteId == null || voteId === "") {
         return (
             <>
-                <Header/>
                 <Container>
                     <div className={styles.title}>
                         <div className={styles.text}>
