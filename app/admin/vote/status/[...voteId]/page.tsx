@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useSocket} from "@/components/socketProvider/SocketProvider";
 import {useEffect, useState} from "react";
 import {useUser} from "@auth0/nextjs-auth0";
-import {useParams, useRouter} from "next/navigation";
+import {useParams} from "next/navigation";
 import {Badge, Button, Form} from "react-bootstrap";
 import formatDate from "@/components/formatDate/formatDate";
 import Table from "react-bootstrap/Table";
@@ -40,7 +40,6 @@ export default function StatusChange() {
     })
     const [changeStatusValue, setChangeStatusValue] = useState<string>("");
     const [inputDisabled, setInputDisabled] = useState<boolean>(true);
-    const router = useRouter();
 
     const changeStatus = (status: string) => {
         if (status == changeStatusValue) {

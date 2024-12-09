@@ -7,12 +7,11 @@ import LiveConnectionStatus from "@/components/liveConnectionStatus/LiveConnecti
 import MenuTitle from "@/components/menuTitle/MenuTitle";
 import AdminContainer from "@/components/adminContainer/AdminContainer";
 import {useSocket} from "@/components/socketProvider/SocketProvider";
-import {Alert, Badge, Button, ButtonGroup, Form, InputGroup, Spinner} from "react-bootstrap";
+import {Alert, Badge, Button, ButtonGroup, Form, InputGroup} from "react-bootstrap";
 import {useCallback, useEffect, useState} from "react";
 import {useUser} from "@auth0/nextjs-auth0";
-import {useParams, useRouter} from "next/navigation";
+import {useParams} from "next/navigation";
 import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
-import formatDate from "@/components/formatDate/formatDate";
 import Table from "react-bootstrap/Table";
 
 export default function EditVote() {
@@ -26,7 +25,6 @@ export default function EditVote() {
         name: "", choices: [], minChoices: 0, maxChoices: 0
     });
     const [voteResetRequired, setVoteResetRequired] = useState<boolean | 'loading'>('loading');
-    const router = useRouter();
     const [loading, setLoading] = useState(true);
 
     const [voteInfo, setVoteInfo] = useState<{

@@ -8,7 +8,7 @@ import LiveConnectionStatus from "@/components/liveConnectionStatus/LiveConnecti
 import MenuTitle from "@/components/menuTitle/MenuTitle";
 import Table from "react-bootstrap/Table";
 import {useSocket} from "@/components/socketProvider/SocketProvider";
-import {useParams, useRouter} from "next/navigation";
+import {useParams} from "next/navigation";
 import {useUser} from "@auth0/nextjs-auth0";
 import {useEffect, useState} from "react";
 import {Badge} from "react-bootstrap";
@@ -17,7 +17,6 @@ import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 export default function CountVote() {
 
     const {voteSocket} = useSocket();
-    const router = useRouter();
     const params = useParams<{ voteId: string }>();
     const { user } = useUser()
     const [loading, setLoading] = useState<boolean>(true);

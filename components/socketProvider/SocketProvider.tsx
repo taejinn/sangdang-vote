@@ -22,12 +22,13 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             timeout: 2000,
         });
 
-        setVoteSocket(newVoteSocket);
+        // setVoteSocket(newVoteSocket);
 
         // 나중에 reconnect_attempt, reconnect 이벤트 구현하기
 
         newVoteSocket.on('connect', () => {
             console.log('Socket connected');
+            setVoteSocket(newVoteSocket); // 위치 위로 변경해보기
         });
 
         newVoteSocket.on('connect_error', (error) => {

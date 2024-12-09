@@ -2,7 +2,6 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useEffect, useState} from "react";
-import {useUser} from "@auth0/nextjs-auth0";
 import styles from './page.module.css'
 import PageTitle from "@/components/pageTitle/PageTitle";
 import LiveConnectionStatus from "@/components/liveConnectionStatus/LiveConnectionStatus";
@@ -13,7 +12,6 @@ import AdminContainer from "@/components/adminContainer/AdminContainer";
 
 export default function Admin() {
 
-    const { user, isLoading, error } = useUser()
     const { voteSocket } = useSocket();
     const [socketPing, setSocketPing] = useState<number | '-'>('-')
     const [liveConnectedClients, setLiveConnectedClients] = useState<number | '-'>('-');
@@ -21,7 +19,7 @@ export default function Admin() {
     const measurePing = async () => {
         const start = Date.now();
         if (voteSocket?.connected) {
-            const res = await voteSocket?.emitWithAck('ping') as Date
+            await voteSocket?.emitWithAck('ping') as Date
             const now = new Date().getTime();
             return now - start;
         } else {

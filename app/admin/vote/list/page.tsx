@@ -13,13 +13,11 @@ import Table from "react-bootstrap/Table";
 import formatDate from "@/components/formatDate/formatDate";
 import {Badge, Button} from 'react-bootstrap';
 import {MdOutlineOpenInNew} from "react-icons/md";
-import {useRouter} from "next/navigation";
 import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 
 export default function List() {
 
     const {voteSocket} = useSocket();
-    const router = useRouter();
     const { user } = useUser()
     const [loading, setLoading] = useState(true);
     const [voteList, setVoteList] = useState<[ {

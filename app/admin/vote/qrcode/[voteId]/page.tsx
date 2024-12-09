@@ -14,7 +14,6 @@ import {useParams} from "next/navigation";
 import {Badge, Button, Form} from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import {MdOutlineOpenInNew} from "react-icons/md";
-import {router} from "next/client";
 import Link from "next/link";
 
 export default function QrcodeView() {

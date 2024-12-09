@@ -26,7 +26,6 @@ export default function View() {
         status: "",
     })
     const [liveConnectionStatus, setLiveConnectionStatus] = useState<"GOOD" | "BAD" | "UNKNOWN" | "RECONNECT" | "RECONNECT_ATTEMPT">("UNKNOWN");
-    const [isFlashing, setIsFlashing] = useState(false);
     const [animationKey, setAnimationKey] = useState(0);
 
     const updateLiveConnectionStatus: React.Dispatch<React.SetStateAction<"GOOD" | "BAD" | "UNKNOWN" | "RECONNECT" | "RECONNECT_ATTEMPT">> = (value) => {

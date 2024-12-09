@@ -21,7 +21,6 @@ export default async function RootLayout({children,}: Readonly<{
     // uid 이용해서 관리자 여부 확인
     
     const session = await auth0.getSession()
-    const uid = session?.user?.sub;
 
     if (!session) {
         return (

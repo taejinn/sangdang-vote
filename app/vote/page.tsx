@@ -6,11 +6,11 @@ import Container from "@/components/container/Container";
 import {useSearchParams} from "next/navigation";
 import {IoMdAlert, IoMdCheckmarkCircle} from "react-icons/io";
 import {BarLoader, PulseLoader} from "react-spinners";
-import {useEffect, useState} from "react";
+import {Suspense, useEffect, useState} from "react";
 import axios from "axios";
 import {io, Socket} from "socket.io-client";
 
-export default function Vote() {
+function VoteContent() {
 
     const searchParams = useSearchParams()
     const voteId = searchParams.get("id")
@@ -28,10 +28,6 @@ export default function Vote() {
     const [isVoteSaveLoading, setIsVoteSaveLoading] = useState<boolean>(false);
     const [voteSubmitButtonDisabled, setVoteSubmitButtonDisabled] = useState<boolean>(true);
     const [liveConnectStatus, setLiveConnectStatus] = useState<"GOOD" | "BAD" | "UNKNOWN">("UNKNOWN");
-
-    const [voteIsEnded, setVoteIsEnded] = useState<boolean>(false);
-
-    const [isVaildVote, setIsVaildVote] = useState<boolean>(false);
 
     const MAX_RETRIES = 50;
     const RETRY_DELAY = 2000; // 2초
@@ -57,7 +53,6 @@ export default function Vote() {
         socket?.on("voteStatusIsEnded", (data) => {
             if (voteId == data) {
                 setProgress("voteIsEnded");
-                setVoteIsEnded(true);
             }
         })
     }, [socket]);
@@ -326,8 +321,8 @@ export default function Vote() {
         setProgress("errorVote");
     }
 
-    const emitWithPromise = (eventName: string, data: any) => {
-        return new Promise<{ status: string, code: string, data: { choices: string[] } }>((resolve, reject) => {
+    const emitWithPromise = (eventName: string, data: { voteId: string; studentId: string; choices: string[]; }) => {
+        return new Promise<{ status: string, code: string, data: { choices: string[] } }>((resolve) => {
             socket?.emit(eventName, data, (response: { status: string, code: string, data: { choices: string[] } }) => {
                 resolve(response);
             });
@@ -554,10 +549,6 @@ export default function Vote() {
 
     return (
         <>
-            <Header/>
-
-            <Container>
-
                 {(progress !== "checkVoteId" && progress !== "invalidVote" && progress !== "deadlineVote" && progress !== "errorVote") ? liveCount : null}
 
                 {progress == "checkVoteId" ? checkVoteId : null}
@@ -577,6 +568,18 @@ export default function Vote() {
                 {progress == "errorVote" ? errorVote : null}
 
                 {progress == "voteIsEnded" ? voteEnded : null}
+        </>
+    );
+}
+
+export default function Vote() {
+    return (
+        <>
+            <Header />
+            <Container>
+                <Suspense fallback={<div>불러오는 중...</div>}>
+                    <VoteContent />
+                </Suspense>
             </Container>
         </>
     );
