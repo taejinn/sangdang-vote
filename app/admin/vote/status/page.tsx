@@ -14,12 +14,14 @@ import {useSocket} from "@/components/socketProvider/SocketProvider";
 import {useRouter} from "next/navigation";
 import {useUser} from "@auth0/nextjs-auth0";
 import {useEffect, useState} from "react";
+import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 
 export default function Status() {
 
     const {voteSocket} = useSocket();
     const router = useRouter();
     const { user } = useUser()
+    const [loading, setLoading] = useState<boolean>(true);
     const [voteList, setVoteList] = useState<[ {
         name: string,
         choices: string[],
@@ -36,6 +38,7 @@ export default function Status() {
             if (voteSocket?.connected) {
                 const res = await voteSocket.emitWithAck('getAllVoteList', { uid: user?.sub });
                 setVoteList(res);
+                setLoading(false);
             }
         }
         const voteUpdateInterval = setInterval(async ()=>{
@@ -46,6 +49,19 @@ export default function Status() {
             clearInterval(voteUpdateInterval)
         }
     }, [voteSocket?.connected, user?.sub])
+
+    if (loading) {
+        return (
+            <AdminContainer>
+                <PageTitle>
+                    투표 상태 변경
+                </PageTitle>
+                <LiveConnectionStatus />
+                <MenuTitle title={"투표 상태 변경"} description={"투표 상태를 변경하여 투표 진행 여부를 설정합니다"} />
+                <AdminLoadingData />
+            </AdminContainer>
+        )
+    }
     
     return (
         <>

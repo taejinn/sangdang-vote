@@ -13,12 +13,14 @@ import {useParams, useRouter} from "next/navigation";
 import {Badge, Button, Form} from "react-bootstrap";
 import formatDate from "@/components/formatDate/formatDate";
 import Table from "react-bootstrap/Table";
+import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 
 export default function StatusChange() {
 
     const {voteSocket} = useSocket();
     const {user} = useUser();
     const params = useParams<{ voteId: string }>();
+    const [loading, setLoading] = useState(true);
     const [voteInfo, setVoteInfo] = useState<{
         name: string,
         choices: string[],
@@ -82,7 +84,8 @@ export default function StatusChange() {
                 if (res.status === "SUCCESS") {
                     setInputDisabled(false);
                     alert(`투표 상태가 [${changeStatusValue}](으)로 변경되었습니다.`);
-                    router.push("/admin/vote/status");
+                    // router.push("/admin/vote/status");
+                    window.location.reload();
                 } else {
                     setInputDisabled(false);
                     alert("알 수 없는 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.");
@@ -112,10 +115,23 @@ export default function StatusChange() {
                 });
                 setChangeStatusValue(res.status);
                 setInputDisabled(false);
+                setLoading(false);
             }
         }
         setVoteListData();
     }, [user?.sub, voteSocket?.connected]);
+
+    if (loading) {
+        return (
+            <AdminContainer>
+                <PageTitle>
+                    투표 상태 변경
+                </PageTitle>
+                <LiveConnectionStatus />
+                <AdminLoadingData style={{marginTop: "20px"}} />
+            </AdminContainer>
+        )
+    }
 
     return (
         <>
@@ -123,11 +139,8 @@ export default function StatusChange() {
                 <PageTitle>
                     투표 상태 변경
                 </PageTitle>
-
                 <LiveConnectionStatus />
-
                 <MenuTitle title={"선택된 투표 정보"} description={"선택한 투표가 맞는지 확인하세요"} />
-
                 <Table striped bordered className={styles.table}>
                     <thead>
                         <tr>

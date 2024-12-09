@@ -1,0 +1,22 @@
+
+.loading {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #dcdcdc;
+  padding: 20px 40px;
+  background: #fff;
+  width: fit-content;
+  border-radius: 15px;
+
+
+  .text {
+    font-family: "pretendard", sans-serif;
+    font-weight: 500;
+    color: black;
+    text-align: center;
+    margin-top: 20px;
+  }
+}

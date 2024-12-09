@@ -1,0 +1,75 @@
+
+.qrcode {
+
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.table {
+  padding: 20px;
+  border-collapse: collapse;
+  margin-bottom: 50px;
+  box-shadow: 0 15px 30px 0 #dcdcdc;
+
+  & > thead, & > tbody, & > thead > tr > th, & > tbody > tr > td {
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+  }
+}
+
+.tableText {
+  font-family: "pretendard", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+}
+
+@keyframes flashGreen {
+  0% { background-color: white; color: black; }
+  50% { background-color: #4CAF50; color: white; }
+  100% { background-color: white; color: black; }
+}
+
+.flashAnimation {
+  animation: flashGreen 0.5s ease;
+  animation-iteration-count: 1;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.live {
+  margin-bottom: 20px;
+}
+
+#statusUnknown {
+  padding: 0 20px;
+  color: white;
+  background-color: #000000;
+}
+
+#statusGood {
+  padding: 0 20px;
+  background-color: #13e61b;
+  color: black;
+}
+
+#statusBad {
+  padding: 0 20px;
+  background-color: #ff0000;
+  color: yellow;
+}
+
+#statusReconnectAttempt {
+  padding: 0 20px;
+  background-color: #ff8000;
+  color: black;
+}

@@ -29,6 +29,10 @@ export default function Vote() {
     const [voteSubmitButtonDisabled, setVoteSubmitButtonDisabled] = useState<boolean>(true);
     const [liveConnectStatus, setLiveConnectStatus] = useState<"GOOD" | "BAD" | "UNKNOWN">("UNKNOWN");
 
+    const [voteIsEnded, setVoteIsEnded] = useState<boolean>(false);
+
+    const [isVaildVote, setIsVaildVote] = useState<boolean>(false);
+
     const MAX_RETRIES = 50;
     const RETRY_DELAY = 2000; // 2초
 
@@ -47,6 +51,15 @@ export default function Vote() {
         }, 500);
 
         return () => clearInterval(interval);
+    }, [socket]);
+
+    useEffect(() => {
+        socket?.on("voteStatusIsEnded", (data) => {
+            if (voteId == data) {
+                setProgress("voteIsEnded");
+                setVoteIsEnded(true);
+            }
+        })
     }, [socket]);
 
     const isValidVote = async () => { // true: 투표 진행 중 / false: 투표 진행 불가 및 유효하지 않음
@@ -345,6 +358,13 @@ export default function Vote() {
         </div>
     )
 
+    const voteEnded = (
+        <div className={styles.alert}>
+            <IoMdAlert style={{color: 'black'}} size={30}/>
+            <div className={styles.text}>투표가 종료되었습니다.</div>
+        </div>
+    )
+
     // voteId가 정상일 경우
 
     const checkVoteId = (
@@ -555,6 +575,8 @@ export default function Vote() {
                 {progress == "voteSuccess" ? voteSuccess : null}
 
                 {progress == "errorVote" ? errorVote : null}
+
+                {progress == "voteIsEnded" ? voteEnded : null}
             </Container>
         </>
     );

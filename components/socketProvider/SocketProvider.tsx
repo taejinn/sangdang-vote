@@ -15,11 +15,19 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const [voteSocket, setVoteSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
-        const newVoteSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL + '/vote');
+        const newVoteSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL + '/vote', {
+            reconnection: true,
+            reconnectionAttempts: Infinity,
+            reconnectionDelay: 1500,
+            timeout: 2000,
+        });
+
+        setVoteSocket(newVoteSocket);
+
+        // 나중에 reconnect_attempt, reconnect 이벤트 구현하기
 
         newVoteSocket.on('connect', () => {
             console.log('Socket connected');
-            setVoteSocket(newVoteSocket);
         });
 
         newVoteSocket.on('connect_error', (error) => {

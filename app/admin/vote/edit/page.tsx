@@ -13,11 +13,13 @@ import {useEffect, useState} from "react";
 import {useSocket} from "@/components/socketProvider/SocketProvider";
 import {useUser} from "@auth0/nextjs-auth0";
 import {useRouter} from "next/navigation";
+import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 
 export default function Edit() {
     const {voteSocket} = useSocket();
     const { user } = useUser();
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
     const [voteList, setVoteList] = useState<[ {
         name: string,
         choices: string[],
@@ -33,6 +35,7 @@ export default function Edit() {
             if (voteSocket?.connected) {
                 const res = await voteSocket.emitWithAck('getAllVoteList', { uid: user?.sub });
                 setVoteList(res);
+                setLoading(false);
             }
         }
         const voteUpdateInterval = setInterval(async ()=>{
@@ -43,6 +46,22 @@ export default function Edit() {
             clearInterval(voteUpdateInterval)
         }
     }, [voteSocket?.connected, user?.sub])
+
+    if (loading) {
+        return (
+            <>
+                <AdminContainer>
+                    <PageTitle>
+                        투표 정보 수정
+                    </PageTitle>
+                    <LiveConnectionStatus />
+                    <MenuTitle title={"투표 수정"} description={"투표를 클릭하여 정보를 수정합니다"} />
+                    <AdminLoadingData />
+                </AdminContainer>
+            </>
+        )
+    }
+
 
     return (
         <>

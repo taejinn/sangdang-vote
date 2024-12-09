@@ -6,17 +6,16 @@ import AdminContainer from "@/components/adminContainer/AdminContainer";
 import PageTitle from "@/components/pageTitle/PageTitle";
 import LiveConnectionStatus from "@/components/liveConnectionStatus/LiveConnectionStatus";
 import MenuTitle from "@/components/menuTitle/MenuTitle";
+import {useEffect, useState} from "react";
+import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 import {useSocket} from "@/components/socketProvider/SocketProvider";
 import {useRouter} from "next/navigation";
 import {useUser} from "@auth0/nextjs-auth0";
-import {useEffect, useState} from "react";
-import {Badge, Button} from "react-bootstrap";
-import {MdOutlineOpenInNew} from "react-icons/md";
+import {Badge} from "react-bootstrap";
 import formatDate from "@/components/formatDate/formatDate";
 import Table from "react-bootstrap/Table";
-import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 
-export default function VoteCount() {
+export default function Qrcode() {
 
     const {voteSocket} = useSocket();
     const router = useRouter();
@@ -52,36 +51,36 @@ export default function VoteCount() {
 
     if (loading) {
         return (
-            <AdminContainer>
-                <PageTitle>투표 집계</PageTitle>
-                <LiveConnectionStatus />
-                <MenuTitle title={"투표 집계"} description={"선택한 투표에 대해 실시간 집계를 진행합니다."} />
-                <AdminLoadingData />
-            </AdminContainer>
+            <>
+                <AdminContainer>
+                    <PageTitle>QRCode</PageTitle>
+                    <LiveConnectionStatus />
+                    <MenuTitle title={"QRCode 확인"} description={"투표에 참여할 수 있는 QRCode를 확인합니다"} />
+                    <AdminLoadingData />
+                </AdminContainer>
+            </>
         )
     }
 
     return (
         <>
             <AdminContainer>
-                <PageTitle>투표 집계</PageTitle>
+                <PageTitle>QRCode</PageTitle>
                 <LiveConnectionStatus />
-
-                <MenuTitle title={"투표 집계"} description={"선택한 투표에 대해 실시간 집계를 진행합니다."} />
-
+                <MenuTitle title={"QRCode 확인"} description={"투표에 참여할 수 있는 QRCode를 확인합니다"} />
                 <Table striped hover bordered className={styles.table}>
                     <thead>
-                    <tr>
-                        <th>투표 제목</th>
-                        <th>상태</th>
-                        <th>생성일</th>
-                        <th>투표 ID</th>
-                    </tr>
+                        <tr>
+                            <th>투표 제목</th>
+                            <th>상태</th>
+                            <th>생성일</th>
+                            <th>투표 ID</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {voteList.map((data, key) => {
                         return (
-                            <tr key={key} className={styles.tableItem} onClick={()=>router.push("/admin/vote/count/"+data.voteId)}>
+                            <tr key={key} className={styles.tableItem} onClick={()=>router.push("/admin/vote/qrcode/"+data.voteId)}>
                                 <td>{data.name}</td>
                                 <td>{data.status === "시작" ? <Badge bg="success">시작</Badge> :
                                     <Badge bg="danger">종료</Badge>}</td>

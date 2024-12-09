@@ -3,14 +3,19 @@
 import {Menu, MenuItem, Sidebar, sidebarClasses} from "react-pro-sidebar";
 import styles from "./SidebarMenu.module.css";
 import React from "react";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {IoMdAdd, IoMdHome, IoMdList} from "react-icons/io";
 import {MdEditNote, MdHowToVote} from "react-icons/md";
-import {IoStopwatch} from "react-icons/io5";
+import {IoQrCode, IoStopwatch} from "react-icons/io5";
 
 export default function SidebarMenu() {
 
     const router = useRouter();
+    const path = usePathname();
+
+    if (path.split("/").at(-1) === "view" && path.split("/").at(-3) === "qrcode") {
+        return;
+    }
 
     return (
         <>
@@ -102,6 +107,17 @@ export default function SidebarMenu() {
                         icon={<MdHowToVote size={20} />}
                     >
                         투표 집계
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => router.push('/admin/vote/qrcode')}
+                        rootStyles={{
+                            textAlign: "left",
+                            fontFamily: "pretendard",
+                            fontWeight: "500"
+                        }}
+                        icon={<IoQrCode size={20} />}
+                    >
+                        QRCode
                     </MenuItem>
                 </Menu>
             </Sidebar>

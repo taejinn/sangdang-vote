@@ -12,6 +12,7 @@ import {useParams, useRouter} from "next/navigation";
 import {useUser} from "@auth0/nextjs-auth0";
 import {useEffect, useState} from "react";
 import {Badge} from "react-bootstrap";
+import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 
 export default function CountVote() {
 
@@ -19,6 +20,7 @@ export default function CountVote() {
     const router = useRouter();
     const params = useParams<{ voteId: string }>();
     const { user } = useUser()
+    const [loading, setLoading] = useState<boolean>(true);
     const [voteInfo, setVoteInfo] = useState<{
         name: string,
         choices: string[],
@@ -61,6 +63,7 @@ export default function CountVote() {
                         console.error("choiceCounts 값이 없음");
                         setVotes([]);
                         setNumberOfParticipants(0);
+                        setLoading(false);
                         return;
                     }
 
@@ -81,6 +84,7 @@ export default function CountVote() {
 
                     setVotes(voteDataWithRatio);
                     setNumberOfParticipants(res.data.votes.totalVotes);
+                    setLoading(false);
                 } catch (e) {
                     console.error(e);
                 }
@@ -94,6 +98,17 @@ export default function CountVote() {
             clearInterval(voteUpdateInterval)
         }
     }, [voteSocket?.connected, user?.sub])
+
+    if (loading) {
+        return (
+            <AdminContainer>
+                <PageTitle>투표 집계</PageTitle>
+                <LiveConnectionStatus />
+                <MenuTitle title={"투표 정보"} description={"아래 투표에 대해 집계를 진행합니다."} />
+                <AdminLoadingData />
+            </AdminContainer>
+        )
+    }
 
     return (
         <>

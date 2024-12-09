@@ -14,12 +14,14 @@ import formatDate from "@/components/formatDate/formatDate";
 import {Badge, Button} from 'react-bootstrap';
 import {MdOutlineOpenInNew} from "react-icons/md";
 import {useRouter} from "next/navigation";
+import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
 
 export default function List() {
 
     const {voteSocket} = useSocket();
     const router = useRouter();
     const { user } = useUser()
+    const [loading, setLoading] = useState(true);
     const [voteList, setVoteList] = useState<[ {
         name: string,
         choices: string[],
@@ -36,6 +38,7 @@ export default function List() {
             if (voteSocket?.connected) {
                 const res = await voteSocket.emitWithAck('getAllVoteList', { uid: user?.sub });
                 setVoteList(res);
+                setLoading(false);
             }
         }
         const voteUpdateInterval = setInterval(async ()=>{
@@ -46,6 +49,22 @@ export default function List() {
             clearInterval(voteUpdateInterval)
         }
     }, [voteSocket?.connected, user?.sub])
+
+    if (loading) {
+        return (
+            <AdminContainer>
+                <PageTitle>
+                    투표 목록
+                </PageTitle>
+                <LiveConnectionStatus />
+                <MenuTitle
+                    title={"생성된 투표 목록"}
+                    description={"실시간으로 정보가 업데이트 됩니다"}
+                />
+                <AdminLoadingData />
+            </AdminContainer>
+        )
+    }
 
     return (
         <>

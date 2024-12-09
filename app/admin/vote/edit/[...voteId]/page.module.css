@@ -28,6 +28,22 @@
 
 .saveButton {
   margin-top: 20px;
+  font-family: "pretendard", sans-serif !important;
+}
+
+.resetButton {
+  margin-top: 10px;
+  font-family: "pretendard", sans-serif !important;
+}
+
+.changeStatusButton {
+  margin-top: 10px;
+  font-family: "pretendard", sans-serif !important;
+}
+
+.voteWarning {
+  margin-top: 10px;
+  width: fit-content;
   font-family: "pretendard", sans-serif;
 }
 

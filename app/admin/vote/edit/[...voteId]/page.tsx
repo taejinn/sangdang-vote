@@ -7,19 +7,13 @@ import LiveConnectionStatus from "@/components/liveConnectionStatus/LiveConnecti
 import MenuTitle from "@/components/menuTitle/MenuTitle";
 import AdminContainer from "@/components/adminContainer/AdminContainer";
 import {useSocket} from "@/components/socketProvider/SocketProvider";
-import {Button, ButtonGroup, Form, InputGroup} from "react-bootstrap";
+import {Alert, Badge, Button, ButtonGroup, Form, InputGroup, Spinner} from "react-bootstrap";
 import {useCallback, useEffect, useState} from "react";
 import {useUser} from "@auth0/nextjs-auth0";
 import {useParams, useRouter} from "next/navigation";
-
-//
-//
-// 이미 1명이라도 투표했을 경우, 수정이 불가능하도록 하게 만들고,
-// 이 페이지 접속 시 변경 메뉴는 모두 비활성화 후
-// 투표 결과 미집계 및 초기화 할 수 있도록 버튼 추가할 것
-//
-//
-
+import AdminLoadingData from "@/components/adminLoadingData/AdminLoadingData";
+import formatDate from "@/components/formatDate/formatDate";
+import Table from "react-bootstrap/Table";
 
 export default function EditVote() {
     const {voteSocket} = useSocket();
@@ -31,7 +25,9 @@ export default function EditVote() {
     }>({
         name: "", choices: [], minChoices: 0, maxChoices: 0
     });
+    const [voteResetRequired, setVoteResetRequired] = useState<boolean | 'loading'>('loading');
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
 
     const [voteInfo, setVoteInfo] = useState<{
         name: string,
@@ -40,15 +36,32 @@ export default function EditVote() {
         maxChoices: number,
         createdAt: string,
         status: string,
-        voteId: string
+        voteId: string,
+        votes: number,
     }>();
 
     useEffect(() => {
         const setVoteListData = async () => {
             if (user?.sub == null) return;
             if (voteSocket?.connected) {
-                const res = await voteSocket.emitWithAck('getVoteDetail', { uid: user?.sub, voteId: params.voteId[0] });
-                setVoteInfo(res);
+                const res = await voteSocket.emitWithAck('getVoteDetailListWithVotes', { uid: user?.sub, voteId: params.voteId[0] });
+                const res2 = await voteSocket.emitWithAck('voteAllCounting', { uid: user?.sub, voteId: params.voteId[0] });
+                if (res2.status === "SUCCESS") {
+                    if (res2.data.count != 0) {
+                        setVoteResetRequired(true);
+                        setInputDisabled(true);
+                    }
+                }
+                setVoteInfo({
+                    name: res.name,
+                    choices: res.choices,
+                    minChoices: res.minChoices,
+                    maxChoices: res.maxChoices,
+                    createdAt: res.createdAt,
+                    status: res.status,
+                    voteId: res.voteId,
+                    votes: res.voteCount,
+                });
                 setUserInput({
                     name: res.name,
                     choices: res.choices,
@@ -56,6 +69,7 @@ export default function EditVote() {
                     maxChoices: res.maxChoices,
                 });
                 setInputDisabled(false);
+                setLoading(false);
             }
         }
         setVoteListData();
@@ -101,6 +115,65 @@ export default function EditVote() {
             maxChoices: filteredNumbers,
         }));
     };
+
+    const changeStatusButton = async () => {
+        const check = confirm("투표 상태를 [종료]로 변경하시겠습니까?");
+
+        if (!check) {
+            alert("취소하였습니다.");
+            return;
+        }
+        if (voteSocket?.connected) {
+            try {
+                const res = await voteSocket?.emitWithAck('changeVoteStatus', {
+                    voteId: voteInfo?.voteId,
+                    uid: user?.sub,
+                    status: "종료",
+                })
+                if (res.status === "SUCCESS") {
+                    alert("투표 상태가 [종료]로 변경되었습니다.");
+                    window.location.reload();
+                } else {
+                    alert("알 수 없는 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("알 수 없는 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.");
+            }
+        } else {
+            alert("실시간 통신 서버와 연결되지 않았습니다.\n연결된 후 다시 시도해주세요.");
+        }
+    }
+
+    const resetButton = async () => {
+        const check = confirm("투표 집계 초기화를 진행하시겠습니까?");
+
+        if (!check) {
+            alert("취소하였습니다.");
+            return;
+        }
+
+        if (voteSocket?.connected) {
+            try {
+                const res = await voteSocket?.emitWithAck('resetVotes', {
+                    voteId: voteInfo?.voteId,
+                    uid: user?.sub,
+                })
+                if (res.status === "SUCCESS") {
+                    alert("투표 집계가 초기화되었습니다.");
+                    // setVoteResetRequired(false);
+                    window.location.reload();
+                } else {
+                    alert("알 수 없는 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("알 수 없는 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.");
+            }
+        } else {
+            alert("실시간 통신 서버와 연결되지 않았습니다.\n연결된 후 다시 시도해주세요.");
+        }
+    }
 
     const saveButton = async () => {
 
@@ -169,7 +242,7 @@ export default function EditVote() {
                 if (res.status === "SUCCESS") {
                     setInputDisabled(false);
                     alert("저장되었습니다.");
-                    router.push("/admin/vote/edit");
+                    window.location.reload();
                 } else {
                     setInputDisabled(false);
                     alert("알 수 없는 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.");
@@ -183,6 +256,124 @@ export default function EditVote() {
             setInputDisabled(false);
             alert("실시간 통신 서버와 연결되지 않았습니다.\n연결된 후 다시 시도해주세요.");
         }
+    }
+
+    if (loading) {
+        return (
+            <>
+                <AdminContainer>
+                    <PageTitle>투표 정보 수정</PageTitle>
+                    <LiveConnectionStatus/>
+                    <MenuTitle title={"투표 수정"} description={"투표를 클릭하여 정보를 수정합니다"}/>
+                    <AdminLoadingData />
+                </AdminContainer>
+            </>
+        )
+    }
+
+    if (voteInfo?.status == "시작") {
+        return (
+            <>
+                <AdminContainer>
+                    <PageTitle>투표 정보 수정</PageTitle>
+                    <LiveConnectionStatus/>
+                    <MenuTitle title={"투표 수정"} description={"투표를 클릭하여 정보를 수정합니다"}/>
+                    <Table striped bordered className={styles.table}>
+                        <thead>
+                        <tr>
+                            <th>투표 제목</th>
+                            <th>투표 선택지</th>
+                            <th>상태</th>
+                            <th>투표자 수</th>
+                            <th>선택 최소</th>
+                            <th>선택 최대</th>
+                            <th>투표 ID</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{voteInfo?.name}</td>
+                            <td>{voteInfo?.choices?.map((data, key) => {
+                                return (
+                                    <div key={'choice-' + key}>
+                                        {key + 1}. {data} <br/>
+                                    </div>
+                                )
+                            })}</td>
+                            <td>
+                                {
+                                    voteInfo?.status.length == 0 ? "" : voteInfo?.status === "시작" ?
+                                        <Badge bg="success">시작</Badge> : <Badge bg="danger">종료</Badge>
+                                }
+                            </td>
+                            <td>{voteInfo?.votes}명</td>
+                            <td>{voteInfo?.minChoices === 0 ? "" : voteInfo?.minChoices}</td>
+                            <td>{voteInfo?.maxChoices === 0 ? "" : voteInfo?.maxChoices}</td>
+                            <td>{voteInfo?.voteId}</td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                    <Alert variant={"danger"} className={styles.voteWarning}>
+                        상태가 <Badge bg="success">시작</Badge> 인 투표는 <Badge bg="danger">종료</Badge> 로 변경 후 수정할 수 있습니다.
+                    </Alert>
+                    <Button variant="danger" className={styles.changeStatusButton} onClick={changeStatusButton}>투표 상태 변경</Button>
+                </AdminContainer>
+            </>
+        )
+    }
+
+    if (!loading && voteResetRequired !== "loading" && voteResetRequired) {
+        return (
+            <>
+                <AdminContainer>
+                    <PageTitle>투표 정보 수정</PageTitle>
+                    <LiveConnectionStatus/>
+                    <MenuTitle title={"투표 수정"} description={"투표를 클릭하여 정보를 수정합니다"}/>
+                    <Table striped bordered className={styles.table}>
+                        <thead>
+                        <tr>
+                            <th>투표 제목</th>
+                            <th>투표 선택지</th>
+                            <th>상태</th>
+                            <th>투표자 수</th>
+                            <th>선택 최소</th>
+                            <th>선택 최대</th>
+                            <th>투표 ID</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{voteInfo?.name}</td>
+                            <td>{voteInfo?.choices?.map((data, key) => {
+                                return (
+                                    <div key={'choice-' + key}>
+                                        {key + 1}. {data} <br/>
+                                    </div>
+                                )
+                            })}</td>
+                            <td>
+                                {
+                                    voteInfo?.status === "" ? "" : voteInfo?.status === "시작" ?
+                                        <Badge bg="success">시작</Badge> : <Badge bg="danger">종료</Badge>
+                                }
+                            </td>
+                            <td>{voteInfo?.votes}명</td>
+                            <td>{voteInfo?.minChoices === 0 ? "" : voteInfo?.minChoices}</td>
+                            <td>{voteInfo?.maxChoices === 0 ? "" : voteInfo?.maxChoices}</td>
+                            <td>{voteInfo?.voteId}</td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                    <Alert variant={"danger"} className={styles.voteWarning}>
+                        이미 1표 이상 투표가 집계되었으므로 집계 초기화 진행 후 수정이 가능합니다.
+                        <br/>
+                        아래 버튼을 클릭 시 초기화 후 투표 수정이 가능합니다.
+                    </Alert>
+                    <Button variant="danger" className={styles.resetButton} onClick={resetButton}>투표 집계 초기화</Button>
+                </AdminContainer>
+            </>
+        )
+
     }
 
     return (
