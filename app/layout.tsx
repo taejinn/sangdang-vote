@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   description: "상당고등학교 전자투표시스템",
 };
 
-const pretendard = localFont({
-    src: "./fonts/PretendardVariable.woff2",
-    variable: "--font-pretendard",
-    display: "swap",
-});
+// const pretendard = localFont({
+//     src: "./fonts/PretendardVariable.woff2",
+//     variable: "--font-pretendard",
+//     display: "swap",
+// });
 
 export default function RootLayout({
   children,
@@ -20,7 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-        <body className={`${pretendard.variable}`}>
+        {/*<body className={`${pretendard.variable}`}>*/}
+        <body>
                 {children}
         </body>
     </html>
