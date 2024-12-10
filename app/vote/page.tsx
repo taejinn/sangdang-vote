@@ -296,9 +296,13 @@ function VoteContent() {
                     choices: userVotes,
                 });
 
-                if (response.status === "SUCCESS") {
+                if (response.status === "SUCCESS" && response.code === "VOTED") {
                     setLiveConnectStatus("GOOD")
                     setProgress("voteSuccess");
+                    return;
+                } else if (response.status === "SUCCESS" && response.code === "ALREADY_VOTED") {
+                    setLiveConnectStatus("GOOD")
+                    setProgress("alreadyVoted");
                     return;
                 } else {
                     throw new Error(response.code || "Unknown error");
