@@ -482,7 +482,7 @@ function VoteContent() {
             <div
                 className={styles.voteSubmitButton}
                 id={voteSubmitButtonDisabled ? styles.voteSubmitButtonDisabled :  undefined}
-                onClick={voteSubmitButton}
+                onClick={voteSubmitButtonDisabled ? ()=>{} : () => voteSubmitButton()}
             >
                 <div className={styles.text}>투표 하기</div>
             </div>
