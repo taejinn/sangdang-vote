@@ -1,5 +1,5 @@
 .title {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 22px;
   font-weight: 700;
   text-align: left;
@@ -14,7 +14,7 @@
   border: 1px solid #c8c8c8;
 }
 .notice .text {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 17px;
   font-weight: 300;
   user-select: none;
@@ -36,7 +36,7 @@
 }
 .alert .text {
   margin-top: 10px;
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 20px;
   font-weight: 500;
   user-select: none;
@@ -45,7 +45,7 @@
 }
 .alert .miniText {
   margin-top: 5px;
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 15px;
   font-weight: 300;
   user-select: none;
@@ -62,7 +62,7 @@
   flex-direction: column;
 }
 .box .miniText {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-weight: 500;
   color: black;
   text-align: left;
@@ -76,7 +76,7 @@
   color: #ff0000;
 }
 .box .label {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 17px;
   font-weight: 500;
   text-align: left;
@@ -88,7 +88,7 @@
 .box .input {
   border-radius: 10px;
   border: 1px solid #b9b9b9;
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 16px;
   padding: 15px 15px;
   margin-top: 10px;
@@ -102,7 +102,7 @@
 }
 .box .errorMessage {
   margin-top: 10px;
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-weight: 400;
   color: #ff0000;
   user-select: none;
@@ -131,7 +131,7 @@
   transition: all 0.2s;
 }
 .button .text {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 17px;
   color: white;
   font-weight: 500;
@@ -144,7 +144,7 @@
   margin-bottom: 20px;
 }
 .question .text {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 25px;
   color: black;
   font-weight: 700;
@@ -162,7 +162,7 @@
   box-shadow: 0 5px 15px 0 rgba(255, 0, 0, 0.4);
 }
 .alreadyVoted .text {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 17px;
   color: white;
   font-weight: 600;
@@ -181,7 +181,7 @@
   box-shadow: 0 5px 15px 0 rgba(255, 228, 0, 0.55);
 }
 .maxChoice .text {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 17px;
   color: black;
   font-weight: 600;
@@ -227,13 +227,13 @@
   border-radius: 10px;
 }
 .selection .item .box .number {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-weight: 700;
   text-align: center;
   font-size: 20px;
 }
 .selection .item .text {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-weight: 700;
   color: black;
   text-align: left;
@@ -311,7 +311,7 @@
   transition: all 0.2s;
 }
 .voteSubmitButton .text {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-size: 17px;
   color: white;
   font-weight: 500;
@@ -345,7 +345,7 @@
 }
 .status .box .text {
   margin-left: 10px;
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-weight: 300;
   color: black;
   text-align: center;
@@ -367,7 +367,7 @@
   margin-bottom: 20px;
 }
 .loading .text {
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-weight: 300;
   font-size: 17px;
   color: black;
@@ -376,7 +376,7 @@
 }
 .loading .miniText {
   margin-top: 5px;
-  font-family: "pretendard", sans-serif;
+  font-family: "pretendard";
   font-weight: 300;
   font-size: 15px;
   color: #555555;
