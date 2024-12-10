@@ -303,7 +303,7 @@ function VoteContent() {
                 } else if (response.status === "SUCCESS" && response.code === "ALREADY_VOTED") {
                     setLiveConnectStatus("GOOD")
                     setProgress("alreadyVoted");
-                    console.log(response.data.choices);
+                    // console.log(response.data.choices);
                     setUserVote({ choices: response.data.choices });
                     return;
                 } else {
