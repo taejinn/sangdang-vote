@@ -1,0 +1,28 @@
+.table {
+  width: fit-content;
+  font-family: "pretendard", sans-serif;
+}
+
+.button {
+  font-family: "pretendard", sans-serif;
+  font-weight: 700;
+}
+
+.voteWarning {
+  margin-top: 10px;
+  width: fit-content;
+  font-family: "pretendard", sans-serif;
+}
+
+.changeStatusButton {
+  margin-top: 10px;
+  font-family: "pretendard", sans-serif !important;
+}
+
+#alertBold {
+  font-weight: 700;
+  color: #ff0000;
+  background: #ffff00;
+}
+
+/*# sourceMappingURL=page.module.css.map */

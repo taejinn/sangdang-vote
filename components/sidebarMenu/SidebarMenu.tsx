@@ -5,7 +5,7 @@ import styles from "./SidebarMenu.module.css";
 import React from "react";
 import {usePathname, useRouter} from "next/navigation";
 import {IoMdAdd, IoMdHome, IoMdList} from "react-icons/io";
-import {MdEditNote, MdHowToVote} from "react-icons/md";
+import {MdDelete, MdEditNote, MdHowToVote} from "react-icons/md";
 import {IoQrCode, IoStopwatch} from "react-icons/io5";
 
 export default function SidebarMenu() {
@@ -96,6 +96,17 @@ export default function SidebarMenu() {
                         icon={<IoStopwatch size={20} />}
                     >
                         투표 상태 변경
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => router.push('/admin/vote/delete')}
+                        rootStyles={{
+                            textAlign: "left",
+                            fontFamily: "pretendard",
+                            fontWeight: "500"
+                        }}
+                        icon={<MdDelete size={20} />}
+                    >
+                        투표 삭제
                     </MenuItem>
                     <MenuItem
                         onClick={() => router.push('/admin/vote/count')}

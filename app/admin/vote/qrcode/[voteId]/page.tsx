@@ -14,7 +14,7 @@ import {useParams} from "next/navigation";
 import {Badge, Button, Form} from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import {MdOutlineOpenInNew} from "react-icons/md";
-import Link from "next/link";
+// import Link from "next/link";
 
 export default function QrcodeView() {
 
@@ -158,14 +158,14 @@ export default function QrcodeView() {
                     />
                 </div>
 
-                <Button variant="info" className={styles.button}>
-                    <Link
-                        style={{textDecoration: "none", color: "black"}}
-                        href={`${process.env.NEXT_PUBLIC_URL}/admin/vote/qrcode/${voteInfo?.voteId}/view?voteStatus=${qrcodeUserOptions.voteStatus}&voteCount=${qrcodeUserOptions.voteCount}&participantCount=${qrcodeUserOptions.participantCount}&liveConnectionStatus=${qrcodeUserOptions.liveConnectionStatus}`}
-                        target="_blank"
-                    >
-                        <MdOutlineOpenInNew size={15} /> QRCode 확인하기
-                    </Link>
+                <Button variant="info" className={styles.button} onClick={()=>window.open(`${process.env.NEXT_PUBLIC_URL}/admin/vote/qrcode/${voteInfo?.voteId}/view?voteStatus=${qrcodeUserOptions.voteStatus}&voteCount=${qrcodeUserOptions.voteCount}&participantCount=${qrcodeUserOptions.participantCount}&liveConnectionStatus=${qrcodeUserOptions.liveConnectionStatus}`, '_blank')}>
+                    {/*<Link*/}
+                    {/*    style={{textDecoration: "none", color: "black"}}*/}
+                    {/*    // href={`${process.env.NEXT_PUBLIC_URL}/admin/vote/qrcode/${voteInfo?.voteId}/view?voteStatus=${qrcodeUserOptions.voteStatus}&voteCount=${qrcodeUserOptions.voteCount}&participantCount=${qrcodeUserOptions.participantCount}&liveConnectionStatus=${qrcodeUserOptions.liveConnectionStatus}`}*/}
+                    {/*    // target="_blank"*/}
+                    {/*>*/}
+                    <MdOutlineOpenInNew size={15} /> QRCode 확인하기
+                    {/*</Link>*/}
                 </Button>
             </AdminContainer>
         </>
